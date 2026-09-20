@@ -3,136 +3,235 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gibson Shakti - News & Updates</title>
+    <title>Gibson Shakti - Announcements</title>
     <style>
+        :root {
+            --bg-main: #0b0f19;
+            --card-bg: #111827;
+            --border-color: #1f2937;
+            --accent-purple: #8b5cf6;
+            --accent-emerald: #10b981;
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+        }
+
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
+
         body {
-            margin: 0;
-            padding: 36px 28px;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #09090b;
-            color: #f4f4f5;
-            user-select: none;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
         }
 
-        .news-header {
-            margin-bottom: 24px;
-            border-bottom: 1px solid #27272a;
-            padding-bottom: 16px;
+        .container {
+            width: 100%;
+            max-width: 720px;
         }
 
-        .news-header-title {
-            font-size: 22px;
-            font-weight: 700;
-            color: #f4f4f5;
-            margin: 0 0 6px 0;
+        /* Modern Dashboard Header */
+        .dashboard-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        .news-header-sub {
-            font-size: 13px;
-            color: #71717a;
-            margin: 0;
-        }
-
-        .news-card {
-            background: #121215;
-            border: 1px solid #27272a;
-            border-radius: 10px;
-            padding: 20px 24px;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            transition: transform 0.15s ease, border-color 0.15s ease;
-        }
-
-        .news-card:hover {
-            border-color: #06b6d4;
-            transform: translateY(-1px);
-        }
-
-        .news-card.alert {
-            border-color: rgba(239, 68, 68, 0.4);
-        }
-
-        .news-card.alert:hover {
-            border-color: #ef4444;
-        }
-
-        .news-meta {
+        .header-title-group {
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 10px;
         }
 
-        .news-tag {
-            background: rgba(6, 182, 212, 0.15);
-            color: #06b6d4;
-            border: 1px solid rgba(6, 182, 212, 0.3);
-            font-size: 10px;
+        .header-indicator {
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-emerald);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-emerald);
+        }
+
+        .dashboard-header h1 {
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .header-time {
+            font-size: 13px;
+            color: var(--text-muted);
+            background: rgba(31, 41, 55, 0.5);
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Feed Cards Layout */
+        .announcement-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+        }
+
+        .card-all::before {
+            background: linear-gradient(180deg, #8b5cf6, #6366f1);
+        }
+
+        .card-group-g::before {
+            background: linear-gradient(180deg, #10b981, #059669);
+        }
+
+        .card-all:hover {
+            border-color: rgba(139, 92, 246, 0.4);
+        }
+
+        .card-group-g:hover {
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .badge {
+            font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            padding: 3px 8px;
-            border-radius: 4px;
+            letter-spacing: 0.08em;
+            padding: 4px 10px;
+            border-radius: 20px;
         }
 
-        .news-tag.alert-tag {
-            background: rgba(239, 68, 68, 0.15);
-            color: #ef4444;
-            border: 1px solid rgba(239, 68, 68, 0.3);
+        .badge-all {
+            background: rgba(139, 92, 246, 0.15);
+            color: #a78bfa;
+            border: 1px solid rgba(139, 92, 246, 0.3);
         }
 
-        .news-date {
-            font-size: 12px;
-            color: #71717a;
+        .badge-group-g {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
         }
 
-        .news-item-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: #f4f4f5;
-            margin: 0 0 8px 0;
+        .card-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
         }
 
-        .news-body {
+        .card-body {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .info-box {
+            margin-top: 14px;
+            padding: 12px 16px;
+            background-color: rgba(17, 24, 39, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
             font-size: 13px;
-            color: #a1a1aa;
-            line-height: 1.6;
-            margin: 0;
+        }
+
+        .info-box strong {
+            color: var(--text-primary);
+        }
+
+        .sender-tag {
+            display: inline-block;
+            margin-top: 16px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-purple);
         }
     </style>
 </head>
 <body>
 
-    <div class="news-header">
-        <h1 class="news-header-title">System Bulletins & Announcements</h1>
-        <p class="news-header-sub">Latest updates, course materials, and team lead directives</p>
-    </div>
+    <div class="container">
+        
+        <!-- Header Section -->
+        <header class="dashboard-header">
+            <div class="header-title-group">
+                <span class="header-indicator"></span>
+                <h1>Gibson Shakti Announcements</h1>
+            </div>
+            <div class="header-time">20 SEP 2026 • 5:45 PM</div>
+        </header>
 
-    <!-- Alert Announcement Item -->
-    <div class="news-card alert">
-        <div class="news-meta">
-            <span class="news-tag alert-tag">Urgent Alert</span>
-            <span class="news-date">18 SEPT 2026 - 2230 HRS</span>
-        </div>
-        <h2 class="news-item-title">Group A & New Comers Confirmation & Access Codes</h2>
-        <p class="news-body">
-            All Group A members and new comers make sure you confirm with me that you have this Application. Everyone should ensure they have their codes; if not, please contact me as early as possible.
-        </p>
-    </div>
+        <!-- Announcements Feed -->
+        <div class="announcement-feed">
+            
+            <!-- Message 1: All Groups -->
+            <article class="card card-all">
+                <div class="card-header">
+                    <span class="badge badge-all">All Groups Directive</span>
+                </div>
+                <h2 class="card-title">Happy Sunday from Casper</h2>
+                <div class="card-body">
+                    <p>Those who haven't paid, make sure you make your payment with Gibson at the earliest possible time.</p>
+                    
+                    <div class="info-box">
+                        <p><strong>Support & Contact Info:</strong> For general questions, please contact me directly. For <strong>Group A</strong> questions, contact Gibson directly.</p>
+                    </div>
+                </div>
+                <span class="sender-tag">— Sent by Casper</span>
+            </article>
 
-    <!-- Announcement Item 2 -->
-    <div class="news-card">
-        <div class="news-meta">
-            <span class="news-tag">System Update</span>
-            <span class="news-date">15 SEPT 2026</span>
+            <!-- Message 2: Group G Specific -->
+            <article class="card card-group-g">
+                <div class="card-header">
+                    <span class="badge badge-group-g">Group G Specific</span>
+                </div>
+                <h2 class="card-title">Project Upload Notice</h2>
+                <div class="card-body">
+                    <p>Attention Group G members: Everyone must upload their projects as earliest as possible.</p>
+                </div>
+                <span class="sender-tag">— Sent by Casper</span>
+            </article>
+
         </div>
-        <h2 class="news-item-title">Tutor Portal v31.02 Release</h2>
-        <p class="news-body">
-            Integrated multi-module dashboard support across Groups G, X, A, B, and C. Performance monitoring and responsive iframe streaming now enabled.
-        </p>
+
     </div>
 
 </body>
